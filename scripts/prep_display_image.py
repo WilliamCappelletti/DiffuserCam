@@ -8,10 +8,10 @@ python scripts/prep_display_image.py --fp data/original_images/rect.jpg \
 
 """
 
+import click
 import cv2
 import numpy as np
 from PIL import Image
-import click
 
 
 @click.command()
@@ -48,9 +48,12 @@ def display(fp, pad, output_path, vshift, brightness):
     img = cv2.imread(fp, cv2.IMREAD_UNCHANGED)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
+    shape = img.shape[:2]
+
     # pad image
     if pad:
-        padding_amount = np.array(img.shape[:2]) * pad / 100
+        padding_amount = np.array(shape) * pad / 100
+
         pad_width = (
             (int(padding_amount[0] // 2), int(padding_amount[0] // 2)),
             (int(padding_amount[1] // 2), int(padding_amount[1] // 2)),
@@ -67,6 +70,11 @@ def display(fp, pad, output_path, vshift, brightness):
 
     # save to jpg
     im = Image.fromarray(img)
+
+    if pad:
+        # reduce image size
+        im = im.resize(shape[::-1], Image.ANTIALIAS)
+
     im.save(output_path)
 
 
