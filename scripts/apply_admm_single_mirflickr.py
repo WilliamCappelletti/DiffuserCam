@@ -152,7 +152,7 @@ def apply_admm(data, fid, gamma, single_psf, n_iter, disp, save):
     print("SSIM", ssim(lensed, est))
     print("LPIPS", lpips(lensed, est))
 
-    plt.show()
+    plt.show(block=False)
 
 
 if __name__ == "__main__":

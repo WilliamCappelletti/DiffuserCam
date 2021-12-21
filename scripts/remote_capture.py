@@ -106,7 +106,18 @@ SENSOR_MODES = [
     help="Number of bits for output.",
 )
 def liveview(
-    fn, hostname, exp, iso, config_pause, sensor_mode, nbits, source, rgb, bayer, gamma, nbits_out
+    fn,
+    hostname,
+    exp,
+    iso,
+    config_pause,
+    sensor_mode,
+    nbits,
+    source,
+    rgb,
+    bayer,
+    gamma,
+    nbits_out,
 ):
     if bayer:
         assert not rgb
@@ -152,7 +163,10 @@ def liveview(
         print(f"COMMAND OUTPUT : ")
         pprint(result_dict)
 
-    if "RPi distribution" in result_dict.keys() and "bullseye" in result_dict["RPi distribution"]:
+    if (
+        "RPi distribution" in result_dict.keys()
+        and "bullseye" in result_dict["RPi distribution"]
+    ):
         # copy over DNG file
         remotefile = f"~/{remote_fn}.dng"
         localfile = f"{fn}.dng"
@@ -254,7 +268,7 @@ def liveview(
     pixel_histogram(img)
     pixel_histogram(img_1chan)
 
-    plt.show()
+    plt.show(block=False)
 
 
 if __name__ == "__main__":

@@ -10,11 +10,12 @@ python scripts/reconstruction_template.py --psf_fp data/psf/diffcam_rgb.png \
 """
 
 import os
-import time
 import pathlib as plib
+import time
+from datetime import datetime
+
 import click
 import matplotlib.pyplot as plt
-from datetime import datetime
 from diffcam.io import load_data
 
 
@@ -141,7 +142,7 @@ def reconstruction(
     print(f"proc time : {time.time() - start_time} s")
 
     if not no_plot:
-        plt.show()
+        plt.show(block=False)
     if save:
         print(f"Files saved to : {save}")
 

@@ -142,7 +142,7 @@ def admm(
     print(f"proc time : {time.time() - start_time} s")
 
     if not no_plot:
-        plt.show()
+        plt.show(block=False)
     if save:
         print(f"Files saved to : {save}")
 

@@ -39,7 +39,12 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 from diffcam.util import rgb2gray
-from diffcam.plot import plot_image, pixel_histogram, plot_cross_section, plot_autocorr2d
+from diffcam.plot import (
+    plot_image,
+    pixel_histogram,
+    plot_cross_section,
+    plot_autocorr2d,
+)
 from diffcam.io import load_psf, load_image
 
 
@@ -107,7 +112,9 @@ from diffcam.io import load_psf, load_image
     type=str,
     help="File path for background image, e.g. for screen.",
 )
-def analyze_image(fp, gamma, width, bayer, lens, diffcam, bg, rg, plot_width, save, nbits, back):
+def analyze_image(
+    fp, gamma, width, bayer, lens, diffcam, bg, rg, plot_width, save, nbits, back
+):
     assert fp is not None, "Must pass file path."
 
     # initialize plotting axis
@@ -147,7 +154,11 @@ def analyze_image(fp, gamma, width, bayer, lens, diffcam, bg, rg, plot_width, sa
     if lens:
         # determine PSF width
         plot_cross_section(
-            img_grey, color="gray", plot_db_drop=width, ax=ax_gray[2], plot_width=plot_width
+            img_grey,
+            color="gray",
+            plot_db_drop=width,
+            ax=ax_gray[2],
+            plot_width=plot_width,
         )
         _, ax_cross = plt.subplots(ncols=3, nrows=1, num="RGB widths", figsize=(15, 5))
         for i, c in enumerate(["r", "g", "b"]):
@@ -164,10 +175,16 @@ def analyze_image(fp, gamma, width, bayer, lens, diffcam, bg, rg, plot_width, sa
     elif diffcam:
         # plot autocorrelations and width
         # -- grey
-        _, ax_auto = plt.subplots(ncols=4, nrows=2, num="Autocorrelations", figsize=(15, 5))
+        _, ax_auto = plt.subplots(
+            ncols=4, nrows=2, num="Autocorrelations", figsize=(15, 5)
+        )
         _, autocorr_grey = plot_autocorr2d(img_grey, ax=ax_auto[0][0])
         plot_cross_section(
-            autocorr_grey, color="gray", plot_db_drop=width, ax=ax_auto[1][0], plot_width=plot_width
+            autocorr_grey,
+            color="gray",
+            plot_db_drop=width,
+            ax=ax_auto[1][0],
+            plot_width=plot_width,
         )
         # -- rgb
         for i, c in enumerate(["r", "g", "b"]):
@@ -186,7 +203,7 @@ def analyze_image(fp, gamma, width, bayer, lens, diffcam, bg, rg, plot_width, sa
         cv2.imwrite(save, cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
         print(f"\nColor-corrected RGB image saved to: {save}")
 
-    plt.show()
+    plt.show(block=False)
 
 
 if __name__ == "__main__":
